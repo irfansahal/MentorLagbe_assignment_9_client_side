@@ -5,10 +5,21 @@ import Link from "next/link"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import logo from "@/app/assets/Gemini_Generated_Image_dqy9vydqy9vydqy9.jpg"
+import { authClient } from "@/lib/auth-client"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const Navbar = () => {
+const Navbar =  () => {
   const [open, setOpen] = useState(false)
+   
+  const { data : session , error } = authClient.useSession()
+   
+  const handleSignOut = async () => {
+      await authClient.signOut()
+  }
 
+  const user = session?.user
+  console.log("role", user?.role);
+  
   return (
     <header className="sticky top-0 z-50 border-b bg-background">
       <div className="mx-auto flex h-25 bg-[#fb9506]  items-center justify-between px-7">
@@ -41,6 +52,14 @@ const Navbar = () => {
           >
             Pricing/Pro Plans
           </Link>
+
+           <Link
+            href={`/dashboard/${user?.role}`}
+            className="font-extrabold text-white hover:text-zinc-500"
+          >
+            Dashboard
+          </Link>
+
           <Link
             href="/about"
             className="font-extrabold text-white hover:text-zinc-500"
@@ -50,7 +69,19 @@ const Navbar = () => {
         </nav>
 
         {/* Buttons */}
-        <div className="flex items-center gap-3">
+       {user ?
+         <div className="flex items-center gap-3"> 
+          <Avatar>
+          <AvatarImage src={user.image || ""} />
+          <AvatarFallback>CN</AvatarFallback>
+          </Avatar> 
+           <div>
+             <h1 className="text-white font-extrabold ">{user.email}</h1>
+             <button className="text-red-700 font-extrabold underline"
+             onClick={handleSignOut}
+             >sign out</button>
+           </div> 
+          </div> :  <div className="flex items-center gap-3">
           <Link
             href="/sign-up"
             className="rounded-md bg-[#fb9d06] border-2 border-white text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-amber-500 sm:px-5"
@@ -73,7 +104,7 @@ const Navbar = () => {
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
-        </div>
+        </div>}
       </div>
 
       {/* Backdrop */}

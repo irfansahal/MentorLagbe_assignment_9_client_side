@@ -24,8 +24,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
+import { uploadImage } from "@/lib/uploadImage"
+import Image from "next/image"
+import { authClient } from "@/lib/auth-client"
+import { redirect } from "next/navigation"
+import { toast } from "@/components/ui/toast"
 
+type UserRole = "tutor" | "student";
 
 export type Role = {
   label : string,
@@ -42,32 +48,92 @@ export function RegistrationForm({
   ...props
 }: React.ComponentProps<"div">) {
 
-  const [ selectValue , setSelectValue ] = useState("")
+  const [ selectValue , setSelectValue ] = useState<UserRole| "" |null>("")
+  const [ selectImage , setSelectImage ] = useState<File|null>(null)
+  const [ prevImage , setPrevImage ] = useState<string | null>(null)
+
   console.log("selectValue",selectValue);
-  
-   const submitHandler = (e : React.FormEvent<HTMLElement>) => {
+
+
+   const submitHandler = async (e : React.FormEvent<HTMLFormElement>) => {
      e.preventDefault()
      const formData = new FormData(e.currentTarget as HTMLFormElement) 
-     const Data = Object.fromEntries(formData.entries());
-     
-     const userData = {
-       fullname : Data.name,
-       email : Data.email,
-       password : Data.password,
-       role : selectValue,
+     const Data = Object.fromEntries(formData.entries()) 
+    //  as {
+    //     name : string,
+    //    email : string,
+    //    password : string,
+    //    role : "tutor" | "student",
+    //    subscription : "free",
+    //    image : string
+    //  }
+        if(!selectValue){
+      toast.add({
+        title: "Error",
+        description: "You have to slelect any one option, student or tutor",
+       });
+       return
+  }
+    
+      const userData : {
+        name : string,
+       email : string,
+       password : string,
+       role : "tutor" | "student",
+       subscription : "free",
+       image? : string
+     } = {
+       name : Data.name as string,
+       email : Data.email as string,
+       password : Data.password as string,
+       role : selectValue as "tutor" | "student",
        subscription : "free"
+      }
+
+    if(selectImage){
+       const imageBBUrl = await uploadImage(selectImage)
+       if(imageBBUrl?.data?.url){
+        userData.image = imageBBUrl?.data?.url 
+       }
       }
       console.log("userData",userData);
      
+      const { data , error } = await authClient.signUp.email({
+       ...userData 
+      }
+  )
+      if(data){
+        toast.add({
+        title: "User Registared",
+        description: `${userData.name} registared on ${userData.email}`,
+       })
+        redirect("/")
+      }
+      if(error){
+        console.log('something went wrong');
+        
+      }
+
+     
    }
+
+   const handleImageChange = (e : ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        console.log(file);
+        if(file){
+          setSelectImage(file)
+          setPrevImage(URL.createObjectURL(file))
+        }
+   }
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Register As A New User</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your information below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -120,7 +186,7 @@ export function RegistrationForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" type="password" name="password" required />
               </Field>
 
 <Field>
@@ -131,8 +197,13 @@ export function RegistrationForm({
                   placeholder="choose an image "
                   required
                   name="image"
+                  onChange={handleImageChange}
                 />
               </Field>
+               
+                  { prevImage && (
+              <Image alt="uploadImage" src={prevImage} width={200} height={100} className="p-5"/>
+          )}
 
               <Field>
                 <Button type="submit" className="bg-amber-400">Sign Up</Button>

@@ -1,5 +1,5 @@
 
-import { RegistrationForm } from '@/components/signIn-form';
+import { RegistrationForm } from '@/app/components/signUp/signIn-form';
 import React from 'react';
 
 const SignUpPage = () => {

@@ -1,11 +1,14 @@
 
+import { LoginForm } from '@/app/components/signin/signinForm';
 import React from 'react';
 
 const SignInPage = () => {
     return (
-        <div>
-            <h1>This is sing in page</h1>
-        </div>
+         <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+              <div className="w-full max-w-sm">
+                <LoginForm />
+              </div>
+            </div>
     );
 };
 

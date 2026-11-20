@@ -49,7 +49,17 @@ const AddTuitionForm = () => {
    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
        e.preventDefault();
        const formData = new FormData(e.currentTarget);
-       const tutionData = Object.fromEntries(formData.entries());
+       const tutionData = Object.fromEntries(formData.entries()) as {
+  title: string;
+  subject: string;
+  classLevel: string;
+  mode: string;
+  location: string;
+  monthlyFee: string;
+  daysPerWeek: string;
+  description: string;
+  image: string;
+};
        console.log("tutionData",tutionData);
        
        if(selectedImage){
@@ -57,15 +67,23 @@ const AddTuitionForm = () => {
        if(imageBBUrl?.data?.url){
            tutionData.image = imageBBUrl?.data?.url
        }
+       }
        
-      }
+       if(!user){
+         toast.add({
+        title: "Error",
+       description: "Please login first",
+       });
+         return 
+       }
+
       const result = await createTuition({...tutionData,
         approvalStatus : "pending",
         isActive : true,
         createdAt : new Date().toLocaleDateString(),
-        tutorName : user?.name ,
-        tutorId : user?.id,
-        tutorEmail : user?.email
+        tutorName : user.name  ,
+        tutorId : user.id ,
+        tutorEmail : user.email 
        });
        
       console.log(result);

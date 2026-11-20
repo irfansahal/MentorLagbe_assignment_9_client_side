@@ -5,8 +5,8 @@ export const getTuitions = async (userId : string | null) => {
       return res.json()
 }
 
-export const getBrowsTuitions = async () => {
-      const res = await fetch(`${BASE_URL}/brows-tuition`);
+export const getBrowsTuitions = async (query ="") => {
+      const res = await fetch(`${BASE_URL}/brows-tuition?${query}`);
       return res.json()
 }
 

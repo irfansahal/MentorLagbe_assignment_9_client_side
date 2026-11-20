@@ -50,7 +50,7 @@ const TuitionDetailsPage = async ({params} : {params : { id : string }}) => {
                     <p className="text-sm text-muted-foreground"><span className="font-medium text-foreground">Tutor Email:</span> {tuition.tutorEmail}</p>
 
                     {/* Bottom: apply button */}
-                     <ApplyButton/>
+                     <ApplyButton tuition={tuition}/>
                 </div>
             </div>
         </div>

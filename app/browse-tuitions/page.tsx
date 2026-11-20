@@ -30,12 +30,22 @@ import { getBrowsTuitions } from "@/lib/api/tuitions"
 
 
 
-const BrowseTuition = async () => {
+const BrowseTuition = async ({ searchParams} : {  searchParams : Promise<{[key: string]: string | string[] | undefined}>}) => {
   
-   const result = await getBrowsTuitions();
+    const search = await searchParams;
+
+    const urlSearch = new URLSearchParams(search as Record<string, string>)
+
+    const query = urlSearch.toString()
+   
+    console.log("query", query);
+    
+   const result = await getBrowsTuitions(query);
    const tuitions: TuitionType[] = Array.isArray(result) ? result : result?.data ?? [];
    
    console.log("tuitions",tuitions);
+   
+   
    
 
   return (
@@ -67,9 +77,13 @@ const BrowseTuition = async () => {
       {/* Section 2: All Tuitions */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">All Tuitions</h2>
-        {tuitions.map((tuition) => (
-          <TuitionCard key={tuition._id} tuition={tuition} />
-        ))}
+        {tuitions.map((tuition) => {
+          if(tuition.isActive === true && tuition.approvalStatus === "approved"){
+             return(
+               <TuitionCard key={tuition._id} tuition={tuition} />
+             )
+          }
+        })}
       </section>
     </div>
   )

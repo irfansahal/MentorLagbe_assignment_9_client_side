@@ -18,11 +18,11 @@ const SearchField = () => {
     
     const search = data.searchField 
     
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
 
     params.set("search", search as string);
     
-    router.push(`/browse-tuitions/?${params.toString()}`)
+    router.push(`/browse-tuitions?${params.toString()}`)
 
     console.log(params);
     

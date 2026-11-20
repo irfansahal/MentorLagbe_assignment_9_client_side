@@ -2,6 +2,7 @@
 
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const subjects = [
@@ -18,14 +19,22 @@ const subjects = [
 ]
 
 const SelectSubject = () => {
+  
+  const router = useRouter();
+  
+  const handleSelectSubject = (value : string | null) => {
+      const params = new URLSearchParams(window.location.search);
 
-    
+      params.set("subject", value as string);
+
+      router.push(`/browse-tuitions?${params.toString()}`)
+    }
 
     return (
         <>
          <Field>
                   <FieldLabel>Subject</FieldLabel>
-                  <Select name="subject">
+                  <Select name="subject" onValueChange={handleSelectSubject}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select subject" />
                     </SelectTrigger>

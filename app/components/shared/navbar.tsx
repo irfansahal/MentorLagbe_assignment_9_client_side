@@ -47,7 +47,7 @@ const Navbar =  () => {
             Browse Tuitions
           </Link>
           <Link
-            href="/pricing"
+            href="/checkout"
             className="font-extrabold text-white hover:text-zinc-500"
           >
             Pricing/Pro Plans

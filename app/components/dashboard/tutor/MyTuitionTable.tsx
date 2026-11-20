@@ -23,6 +23,7 @@ const MyTuitionTable = ({ tuitions }: { tuitions: TuitionType[] }) => {
   // if (tuitions.length === 0) {
   //   return <p className="text-sm text-muted-foreground">No tuitions found.</p>
   // }
+      console.log("tuitions",tuitions);
       
 
   const router = useRouter()

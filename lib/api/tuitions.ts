@@ -4,3 +4,14 @@ export const getTuitions = async (userId : string | null) => {
       const res = await fetch(`${BASE_URL}/tuitions/${userId}`);
       return res.json()
 }
+
+export const getBrowsTuitions = async () => {
+      const res = await fetch(`${BASE_URL}/brows-tuition`);
+      return res.json()
+}
+
+export const getOneTuitionById = async (tuitionId : string) => {
+      const res = await fetch(`${BASE_URL}/one-Tuition-by-Id/${tuitionId}`);
+      return res.json()
+}
+

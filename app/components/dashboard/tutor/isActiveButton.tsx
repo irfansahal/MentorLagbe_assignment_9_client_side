@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { TuitionType } from './EditDialog';
 import { updateTuition } from '@/lib/actions/tuitions';
 import { toast } from '@/components/ui/toast';
+import { useRouter } from 'next/navigation';
 
 const availabilityStatuses = [
     { label : "Active", value : true},
@@ -16,6 +17,7 @@ const IsActiveButton = ({tuition}: {tuition : TuitionType}) => {
     const [ activeValue , setIsactive ] = useState(true)
    console.log("activeValue", activeValue);
   
+   const router = useRouter()
 
      const handleActive = async (value: string | null) => {
          const updatedActive = await updateTuition(tuition._id, { isActive : Boolean(value) });
@@ -26,12 +28,13 @@ const IsActiveButton = ({tuition}: {tuition : TuitionType}) => {
                  title: "Success",
                  description: `You updated a tuition successfully`,
                 })
-                setIsactive(!value);
+                setIsactive(activeValue);
+                router.refresh()
        }
   }
     return (
         <>
-         <Select defaultValue={tuition.isActive ? "Actibe" : "Closed" } onValueChange={handleActive}>
+         <Select value={tuition.isActive  ? "Active" : "Closed" } onValueChange={handleActive}>
                   <SelectTrigger size="sm" className="w-28">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>

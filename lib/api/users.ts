@@ -4,3 +4,8 @@ export const subscribedUser = async (userId : string | null) => {
     const res = await fetch(`${BASE_URL}/user/${userId}/subscription`);
     return res.json()   
 }
+
+export const getAllUsers = async () => {
+    const res = await fetch(`${BASE_URL}/all-user`);
+    return res.json()
+}

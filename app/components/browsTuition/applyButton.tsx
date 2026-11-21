@@ -80,6 +80,8 @@ const ApplyButton = ({tuition}: {tuition : Tuition}) => {
            preferredSchedule : studetnData.schedule as string,
            learningNote : studetnData.note as string,
            studentId : user.id,
+           studentName : user.name,
+           studentEmail : user.email,
          }
        
          const result = await createApplication(applicationData);

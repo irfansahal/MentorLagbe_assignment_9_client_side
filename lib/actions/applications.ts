@@ -23,3 +23,14 @@ export const createApplication = async (data : Application) => {
     });
     return res.json()
 }
+
+export const updatingCurrentUserApplication = async (applictionId: string , data : { status : string | null}) => {
+    const res = await fetch(`${BASE_URL}/updating-application-status/${applictionId}`,{
+        method : 'PATCH',
+        headers : {
+              "Content-Type": "application/json"
+        },
+        body : JSON.stringify(data)
+    });
+    return res.json()
+}

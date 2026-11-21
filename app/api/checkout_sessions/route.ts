@@ -7,11 +7,11 @@ import { auth } from '@/lib/auth';
 export async function POST(req : Request) {
 
     "use server";
-    const session = await auth.api.getSession({
+    const UserSession = await auth.api.getSession({
         headers: await headers()
     })
 
-    const user = session?.user
+    const user = UserSession?.user
   try {
     const headersList = await headers()
     const origin = headersList.get('origin')

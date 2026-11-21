@@ -31,6 +31,7 @@ export const createTuition = async  (data :Tuition ) => {
     return res.json()
 }
 
+// updating by tutor
 export const updateTuition = async (tuitionId : string , updateData : Partial<Tuition> ) => {
      const res = await fetch(`${BASE_URL}/tuition/${tuitionId}`, {
            method : "PATCH",
@@ -48,4 +49,16 @@ export const deleteATuition = async ( tuitionId : string ) => {
 
      });
      return res.json()
+} 
+
+// updating by admin 
+export const updateTuitionByAdmin = async (tuitionId : string, data : { approvalStatus : string  | null} ) => {
+   const res = await fetch(`${BASE_URL}/tuition/${tuitionId}`,{
+      method : 'PATCH',
+      headers : {
+              "Content-Type": "application/json"
+      },
+      body : JSON.stringify(data)
+   });
+   return res.json();
 } 

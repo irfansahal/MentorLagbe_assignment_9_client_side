@@ -15,3 +15,7 @@ export const getOneTuitionById = async (tuitionId : string) => {
       return res.json()
 }
 
+export const getAllTuitions = async () => {
+      const res = await fetch(`${BASE_URL}/tuitions`);
+      return res.json()
+}

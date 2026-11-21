@@ -39,7 +39,9 @@ export async function POST(req : Request) {
       customer_email : user?.email,
       mode: 'payment',
       metadata : {
-        userId : user?.id as string
+        userId : user?.id as string,
+        userName : user?.name as string,
+        userRole : user?.role as string,
       },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       // Provide a name (for example, hosted_web_0001) to label this Checkout integration and measure its conversion independently

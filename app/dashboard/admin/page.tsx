@@ -10,17 +10,17 @@ const AdminDashboard = async () => {
     
     // const { data , error } = await authClient.token();
     
-    const tokenData = await auth.api.getToken({
-        headers : await headers()
-    })
+    // const tokenData = await auth.api.getToken({
+    //     headers : await headers()
+    // })
     
     
     const session = await auth.api.getSession({
         headers : await headers()
     });
 
-    console.log("token", tokenData?.token, session?.user);
-    console.log("Token error:");
+    // console.log("token", tokenData?.token, session?.user , session?.session.token);
+    // console.log("Token error:");
     
 
     const user = session?.user

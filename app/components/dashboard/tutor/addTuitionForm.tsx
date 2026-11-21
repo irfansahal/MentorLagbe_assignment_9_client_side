@@ -45,6 +45,8 @@ const AddTuitionForm = () => {
   console.log(selectedImage);
   const { data : session , error } = authClient.useSession();
   const user = session?.user
+  
+  const token = session?.session.token
 
    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
        e.preventDefault();
@@ -84,7 +86,7 @@ const AddTuitionForm = () => {
         tutorName : user.name  ,
         tutorId : user.id ,
         tutorEmail : user.email 
-       });
+       },token);
        
       console.log(result);
       if(result){

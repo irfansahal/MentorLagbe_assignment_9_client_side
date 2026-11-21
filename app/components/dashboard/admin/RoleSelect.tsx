@@ -3,6 +3,7 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/toast';
 import { updatingUser } from '@/lib/actions/users';
+import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -11,10 +12,13 @@ const roles = ["student", "tutor", "admin"];
 const RoleSelect =  ({userId} : {userId : string }) => {
 
     const router = useRouter()
+    const { data : session , error } = authClient.useSession() 
+   
+    const token = session?.session.token
 
      const handleSelectValueChange = async (value : string | null) => {
          console.log("selectValue", value);
-           const updateResult = await updatingUser(userId , { role : value });
+           const updateResult = await updatingUser(userId , { role : value },token);
            console.log("updateResult",updateResult);
            if(updateResult.modifiedCount > 0){
              toast.add({
@@ -26,7 +30,7 @@ const RoleSelect =  ({userId} : {userId : string }) => {
            if(updateResult.modifiedCount === 0){
              toast.add({
              title: "Error",
-            description: `Something Went Wrong`,
+            description: `Something Went Wrong ${updateResult.meassage}`,
            }); 
            }
      }

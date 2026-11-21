@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
 import {  updateTuition } from "@/lib/actions/tuitions"
+import { authClient } from "@/lib/auth-client"
 import { uploadImage } from "@/lib/uploadImage"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -63,9 +64,12 @@ const EditDialog = ({ tuition }: { tuition: TuitionType }) => {
   
   const [ selectedImage , setSelectedImage ] = useState<File | "" | null>("")
   const [ prevImage , setPrevImage ] = useState("") 
-   
+
   const router = useRouter()
   
+  const { data : session , error } = authClient.useSession()
+  
+  const token = session?.session.token
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -114,7 +118,7 @@ const EditDialog = ({ tuition }: { tuition: TuitionType }) => {
            return;
          }
 
-         const updateResult = await updateTuition(tuition?._id, queryData );
+         const updateResult = await updateTuition(tuition?._id, queryData, token);
          
          if(updateResult.modifiedCount > 0){
               toast.add({

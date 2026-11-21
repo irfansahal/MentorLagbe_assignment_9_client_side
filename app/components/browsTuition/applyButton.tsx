@@ -45,10 +45,12 @@ const ApplyButton = ({tuition}: {tuition : Tuition}) => {
      const { data : session , error } = authClient.useSession()
     
      const router = useRouter()
-  
+
      console.log("new tuition",tuition);
      
      const user = session?.user; 
+     
+     const token = session?.session.token;
 
     //  (Phone, Preferred Schedule, Learning Note status: 'pending' 
     //  (Tuition Title, Tutor Name & Email, Monthly Fee, Applied Date, and Status Badge: Pending / Accepted / Rejected)
@@ -84,7 +86,7 @@ const ApplyButton = ({tuition}: {tuition : Tuition}) => {
            studentEmail : user.email,
          }
        
-         const result = await createApplication(applicationData);
+         const result = await createApplication(applicationData, token);
          console.log("result",result);
          
          if (!result.insertedId) {

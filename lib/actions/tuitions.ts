@@ -1,3 +1,4 @@
+import { authClient } from "../auth-client";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
@@ -20,11 +21,24 @@ export type Tuition = {
      createdAt : string,
 }
 
-export const createTuition = async  (data :Tuition ) => {
-    const res = await fetch(`${BASE_URL}/create-tuitions`, {
+
+const getToken = () => {
+     // const router = useRouter()
+     const { data   , error } = authClient.useSession();
+     // if(!data || data.session?.token){
+          
+     // }
+     const token = data?.session.token;
+     return token
+}
+
+export const createTuition = async  (data :Tuition , token:string |undefined) => {
+    
+     const res = await fetch(`${BASE_URL}/create-tuitions`, {
          method : "POST",
          headers : {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              authorization :  `Bearer ${token}` 
          },
          body : JSON.stringify(data)
     });
@@ -32,11 +46,12 @@ export const createTuition = async  (data :Tuition ) => {
 }
 
 // updating by tutor
-export const updateTuition = async (tuitionId : string , updateData : Partial<Tuition> ) => {
+export const updateTuition = async (tuitionId : string , updateData : Partial<Tuition>, token :string | undefined ) => {
      const res = await fetch(`${BASE_URL}/tuition/${tuitionId}`, {
            method : "PATCH",
          headers : {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              authorization :  `Bearer ${token}`
          },
          body : JSON.stringify(updateData)
      });
@@ -52,11 +67,12 @@ export const deleteATuition = async ( tuitionId : string ) => {
 } 
 
 // updating by admin 
-export const updateTuitionByAdmin = async (tuitionId : string, data : { approvalStatus : string  | null} ) => {
+export const updateTuitionByAdmin = async (tuitionId : string, data : { approvalStatus : string  | null} , token :string | undefined) => {
    const res = await fetch(`${BASE_URL}/tuition/${tuitionId}`,{
       method : 'PATCH',
       headers : {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              authorization :  `Bearer ${token}`
       },
       body : JSON.stringify(data)
    });

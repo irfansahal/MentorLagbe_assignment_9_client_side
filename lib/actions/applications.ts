@@ -13,11 +13,12 @@ export type Application = {
     
 }
 
-export const createApplication = async (data : Application) => {
-    const res = await fetch(`${BASE_URL}/create-application/`,{
+export const createApplication = async (data : Application, token : string | undefined) => {
+    const res = await fetch(`${BASE_URL}/create-application`,{
         method : "POST",
         headers : {
-                 "Content-Type": "application/json"
+                 "Content-Type": "application/json",
+                 authorization :  `Bearer ${token}`
         },
         body : JSON.stringify(data)
     });

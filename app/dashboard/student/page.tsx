@@ -15,6 +15,9 @@ const StundentDashboard = async () => {
      const user = session?.user
 
      const studetnOverview = await getStudentOverveiw(user?.id)
+     
+     console.log("studetnOverview",studetnOverview);
+     
 
     return (
         <div className="flex flex-col gap-6 px-10">
@@ -35,7 +38,7 @@ const StundentDashboard = async () => {
                     <span className="flex size-11 items-center justify-center rounded-full bg-violet-500/10">
                         <Send className="size-5 text-violet-600" />
                     </span>
-                    <p className="mt-4 text-3xl font-bold">{studetnOverview?.totalAppliedTuitions}</p>
+                    <p className="mt-4 text-3xl font-bold">{studetnOverview?.totalTuitions}</p>
                     <p className="text-sm text-muted-foreground">Total Applied Tuitions</p>
                     <span className="absolute -bottom-6 -right-6 size-24 rounded-full bg-violet-500/20" />
                 </div>
@@ -44,7 +47,7 @@ const StundentDashboard = async () => {
                     <span className="flex size-11 items-center justify-center rounded-full bg-green-500/10">
                         <CheckCircle2 className="size-5 text-green-600" />
                     </span>
-                    <p className="mt-4 text-3xl font-bold">{studetnOverview?.acceptedApplications}</p>
+                    <p className="mt-4 text-3xl font-bold">{studetnOverview?.acceptedApplication}</p>
                     <p className="text-sm text-muted-foreground">Accepted Applications</p>
                     <span className="absolute -bottom-6 -right-6 size-24 rounded-full bg-green-500/20" />
                 </div>

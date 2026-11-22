@@ -36,14 +36,24 @@ const  menuItemsByRole = {
 
 const DashboardSidebar = () => {
 
-    const { data : session , error } = authClient.useSession()
-    const role = session?.user?.role || "student"
+    const { data : session , error , isPending } = authClient.useSession()
+    // const role = session?.user?.role || "student"
+   
+    if (isPending) {
+    return <div>Loading sidebar...</div>;
+  }
 
-     console.log("role",menuItemsByRole[role], role);
-     
     const user = session?.user
-    
+      
+ if (!user) {
+    return null;
+  }
 
+  const role = user.role;
+
+   const menuItems =
+    menuItemsByRole[role as keyof typeof menuItemsByRole] ??
+    menuItemsByRole.student;
    
     return (
          <Sidebar className='bg-black'>
@@ -65,7 +75,7 @@ const DashboardSidebar = () => {
       <SidebarContent>
         <SidebarGroup >
              <SidebarMenu>
-  {menuItemsByRole[role].map((item) => (
+  {menuItems.map((item) => (
     <SidebarMenuItem key={item.name}>
       <SidebarMenuButton render={<Link href={item.url} />}>
         {/* <project.icon /> */}

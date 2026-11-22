@@ -1,21 +1,24 @@
-# Next.js template
+# Project Name :
 
-This is a Next.js template with shadcn/ui.
+MentorLagbe – Smart Tuition & Mentorship Platform
 
-## Adding components
+## Purpose :
 
-To add components to your app, run the following command:
+To help students find suitable tutors easily and help tutors manage their tuition and students in one platform.
 
-```bash
-npx shadcn@latest add button
-```
+## Admin credentials : 
 
-This will place the ui components in the `components` directory.
+email : afridi@gamil.com , password : afridi123 .
 
-## Using components
+## Live Url : 
 
-To use the components in your app, import them as follows:
+[MentorLagbe](https://mentor-lagbe-client-side.vercel.app/)
+ 
+## key features :  
 
-```tsx
-import { Button } from "@/components/ui/button";
-```
+1 . secure registration for student and tutor based access control on their role using better-auth and jwt  
+2 .  students can brows approved tuition listing using  and choose their suitable tuition using filter such as subject, class level, teaching mode,
+3 .Tutors can create update and mange tuition posts, while students can apply for tuitions and track their application status.Tutors can accept or reject applications. 
+4 . students and tutors can upgrade to pro plans through secure stripe payments to unlock premium platform features .
+
+5 . separate dashboards for students tutors and admin to manage applications, tuition listings, user accounts,  and payment transactions.

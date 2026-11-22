@@ -76,12 +76,13 @@ const Navbar =  () => {
           <AvatarFallback>CN</AvatarFallback>
           </Avatar> 
            <div>
-             <h1 className="text-white font-extrabold ">{user.email}</h1>
+             <h1 className="text-white font-extrabold ">{user.name}</h1>
              <button className="text-red-700 font-extrabold underline"
              onClick={handleSignOut}
              >sign out</button>
            </div> 
-          </div> :  <div className="flex items-center gap-3">
+          </div> :
+            <div className="flex items-center gap-3">
           <Link
             href="/sign-up"
             className="rounded-md bg-[#fb9d06] border-2 border-white text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-amber-500 sm:px-5"
@@ -96,7 +97,10 @@ const Navbar =  () => {
           </Link>
 
           {/* Toggle button (mobile only) */}
-          <button
+         
+        </div>}
+
+         <button
             type="button"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
@@ -104,7 +108,6 @@ const Navbar =  () => {
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
-        </div>}
       </div>
 
       {/* Backdrop */}
@@ -136,6 +139,15 @@ const Navbar =  () => {
           >
             Browse Tuitions
           </Link>
+
+           <Link
+            href={`/dashboard/${user?.role}`} 
+            onClick={() => setOpen(false)}
+            className="font-extrabold text-white hover:text-zinc-500"
+          >
+            Dashboard
+          </Link>
+
           <Link
             href="/pricing"
             onClick={() => setOpen(false)}

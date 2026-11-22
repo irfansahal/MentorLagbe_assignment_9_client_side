@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/toast"
 import { createTuition } from "@/lib/actions/tuitions"
+import { getTuitions } from "@/lib/api/tuitions"
+import { getSubscribedUser } from "@/lib/api/users"
 import { authClient } from "@/lib/auth-client"
 import { uploadImage } from "@/lib/uploadImage"
 import Image from "next/image"
@@ -70,15 +72,33 @@ const AddTuitionForm = () => {
            tutionData.image = imageBBUrl?.data?.url
        }
        }
-       
+        
        if(!user){
          toast.add({
         title: "Error",
        description: "Please login first",
        });
          return 
-       }
-
+       } 
+         
+            const subcribedUser = await getSubscribedUser(user?.id)
+            const currentTutorTuition = await getTuitions(user.id)
+            
+            console.log(subcribedUser, currentTutorTuition);
+            
+          if (
+             subcribedUser.subscription !== "paid" &&
+             currentTutorTuition.length >= 2
+           ) {
+             toast.add({
+               title: "Error",
+               description: `You Already Finised The Free Plan`,
+             })
+             router.push("/checkout")
+             return
+           } 
+       
+      
       const result = await createTuition({...tutionData,
         approvalStatus : "pending",
         isActive : true,

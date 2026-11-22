@@ -70,7 +70,7 @@ export function LoginForm({
   )
       if(data){
         toast.add({
-        title: "User Registared",
+        title: "User Logged In",
         description: `You logged in succesfully on email ${userData.email} `})
         redirect("/")
       }

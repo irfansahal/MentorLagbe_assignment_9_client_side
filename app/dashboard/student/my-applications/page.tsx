@@ -55,7 +55,7 @@ const MyApplicationPage = async () => {
                             >
                                 {application.status}
                             </span>
-                            <CancleButton/>
+                            <CancleButton applicationId={application._id}/>
                         </div>
                     </div>
                 ))}

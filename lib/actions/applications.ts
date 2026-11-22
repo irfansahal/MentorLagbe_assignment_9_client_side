@@ -35,3 +35,15 @@ export const updatingCurrentUserApplication = async (applictionId: string , data
     });
     return res.json()
 }
+
+// cancle 
+
+export const cancleApplication = async (applicationId: string , token : string | undefined) => {
+     const res = await fetch(`${BASE_URL}/canlcle-application/${applicationId}`,{
+          method : "DELETE",
+          headers : {
+            authorization :  `Bearer ${token}`
+          }
+     });
+     return res.json()
+}

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar"
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const  menuItemsByRole = {
    admin : [
@@ -40,11 +41,27 @@ const DashboardSidebar = () => {
 
      console.log("role",menuItemsByRole[role], role);
      
+    const user = session?.user
+    
 
+   
     return (
          <Sidebar className='bg-black'>
-      <div className='pt-30 bg-black h-full text-white'>
-        <SidebarHeader/>  
+      <div className='pt-30 bg-black h-full text-white '>
+        <SidebarHeader>
+             <Link href={'/profile'}>
+             <div className='pl-5 flex items-center gap-3 bg-[#fb9506] rounded-lg p-3'>
+              <Avatar >
+          <AvatarImage src={user?.image || ""} />
+          <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+              <div>
+                <h1>{user?.name}</h1>
+              <h3>{user?.email}</h3>
+              </div>
+             </div>
+             </Link>
+          </SidebarHeader>  
       <SidebarContent>
         <SidebarGroup >
              <SidebarMenu>

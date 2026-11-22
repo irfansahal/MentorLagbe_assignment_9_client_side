@@ -12,7 +12,8 @@ type ApplicationRow = {
     studentEmail?: string,
     studentPhone: string,
     preferredSchedule: string,
-    learningNote: string
+    learningNote: string,
+    status : string,
 }
 
 const MyApplication = async () => {
@@ -54,6 +55,9 @@ const MyApplication = async () => {
                             </p>
                             <p className="text-sm text-muted-foreground">
                                 Note: {application.learningNote}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                status : {application.status}
                             </p>
                         </div>
 

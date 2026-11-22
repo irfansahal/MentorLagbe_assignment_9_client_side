@@ -6,7 +6,7 @@ export const getCurrentStudentApplication = async (studentId : string |undefined
     return res.json()
 }
 
-
+// how many applicaiton resived for current user tuition 
 export const getApplicationOfCurrentUser = async (tutorId : string | undefined) => {
    const res =  await fetch(`${BASE_URL}/applicatios-of-current-user-tuition/${tutorId}`);
    return res.json()

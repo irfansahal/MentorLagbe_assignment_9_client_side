@@ -52,7 +52,7 @@ const Tuitions = async () => {
                             <div className="flex min-w-0 flex-col gap-1">
                                 <h3 className="text-base font-semibold">{tuition.title}</h3>
                                 <p className="text-sm text-muted-foreground">Subject: {tuition.subject}</p>
-                                {/* <p className="text-sm text-muted-foreground">Description: {tuition.description}</p> */}
+                                 {/* <p className="text-sm text-muted-foreground">Description: {tuition.description}</p>  */}
                                 <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                                     <span>Monthly Fee: ৳{tuition.monthlyFee}</span>
                                     <span>Mode: {tuition.mode}</span>

@@ -1,8 +1,8 @@
 "use client"
-import React from 'react';
-import { TuitionType } from '../dashboard/tutor/EditDialog';
-import { authClient } from '@/lib/auth-client';
-import { toast } from '@/components/ui/toast';
+import React from "react"
+import { TuitionType } from "../dashboard/tutor/EditDialog"
+import { authClient } from "@/lib/auth-client"
+import { toast } from "@/components/ui/toast"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -17,105 +17,128 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { createApplication } from '@/lib/actions/applications';
-import { useRouter } from 'next/navigation';
+import { createApplication } from "@/lib/actions/applications"
+import { useRouter } from "next/navigation"
+import { getSubscribedUser } from "@/lib/api/users"
+import { getCurrentStudentApplication } from "@/lib/api/application"
 
 type Tuition = {
-  approvalStatus: string;
-  classLevel: string;
-  createdAt: string;
-  daysPerWeek: string;
-  description: string;
-  image: string;
-  isActive: boolean;
-  location: string;
-  mode: string;
-  monthlyFee: string;
-  subject: string;
-  title: string;
-  tutorEmail: string;
-  tutorId: string;
-  tutorName: string;
-  _id: string;
-};
+  approvalStatus: string
+  classLevel: string
+  createdAt: string
+  daysPerWeek: string
+  description: string
+  image: string
+  isActive: boolean
+  location: string
+  mode: string
+  monthlyFee: string
+  subject: string
+  title: string
+  tutorEmail: string
+  tutorId: string
+  tutorName: string
+  _id: string
+}
 
-const ApplyButton = ({tuition}: {tuition : Tuition}) => {
-    
-     
-     const { data : session , error } = authClient.useSession()
-    
-     const router = useRouter()
+const ApplyButton = ({ tuition }: { tuition: Tuition }) => {
+  const { data: session, error } = authClient.useSession()
 
-     console.log("new tuition",tuition);
-     
-     const user = session?.user; 
-     
-     const token = session?.session.token;
+  const router = useRouter()
 
-    //  (Phone, Preferred Schedule, Learning Note status: 'pending' 
-    //  (Tuition Title, Tutor Name & Email, Monthly Fee, Applied Date, and Status Badge: Pending / Accepted / Rejected)
+  console.log("new tuition", tuition)
 
-    const applyHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-         e.preventDefault()
+  const user = session?.user
 
-         const formData = new FormData(e.currentTarget)
-         const studetnData = Object.fromEntries(formData.entries())
+  const token = session?.session.token
 
-         if(user?.role !== "student"){
-            toast.add({
-         title: "Error",
-         description: `You are not registared as student`,
-         });
+  //  (Phone, Preferred Schedule, Learning Note status: 'pending'
+  //  (Tuition Title, Tutor Name & Email, Monthly Fee, Applied Date, and Status Badge: Pending / Accepted / Rejected)
+
+  const applyHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+    const studetnData = Object.fromEntries(formData.entries())
+
+    const subcribedUser = await getSubscribedUser(user?.id)
+    const currentStudentApplication = await getCurrentStudentApplication(
+      user?.id
+    )
+
+    if (
+      subcribedUser.subscription !== "paid" &&
+      currentStudentApplication.length >= 2
+    ) {
+      toast.add({
+        title: "Error",
+        description: `You Already Finised The Free Plan`,
+      })
+      router.push("/checkout")
+      return
+    } else {
+      if (user?.role !== "student") {
+        toast.add({
+          title: "Error",
+          description: `You are not registared as student`,
+        })
         return
-         }
-         
-         const applicationData = {
-           title : tuition.title,
-           tutorName : tuition.tutorName,
-           tutorEmail : tuition.tutorEmail,
-           tuitorId : tuition.tutorId,
-           monthlyFee : tuition.monthlyFee,
-           appliedDate : new Date().toLocaleDateString(),
-           status : tuition.approvalStatus,
-           tuitionId : tuition._id,
-           studentPhone : studetnData.phone as string,
-           preferredSchedule : studetnData.schedule as string,
-           learningNote : studetnData.note as string,
-           studentId : user.id,
-           studentName : user.name,
-           studentEmail : user.email,
-         }
-       
-         const result = await createApplication(applicationData, token);
-         console.log("result",result);
-         
-         if (!result.insertedId) {
-         toast.add({
-                  title: "Error",
-                  description: `Some thing went wront`,
-                 });
-         return;
-         }
+      }
 
-         if(result.insertedId){
-             router.push("/browse-tuitions")   
-          toast.add({
-                  title: "Success",
-                  description: `You applied successfully`,
-                 });
-         }
+      const applicationData = {
+        title: tuition.title,
+        tutorName: tuition.tutorName,
+        tutorEmail: tuition.tutorEmail,
+        tuitorId: tuition.tutorId,
+        monthlyFee: tuition.monthlyFee,
+        appliedDate: new Date().toLocaleDateString(),
+        //  status : tuition.approvalStatus,
+        status: "pending",
+        tuitionId: tuition._id,
+        studentPhone: studetnData.phone as string,
+        preferredSchedule: studetnData.schedule as string,
+        learningNote: studetnData.note as string,
+        studentId: user.id,
+        studentName: user.name,
+        studentEmail: user.email,
+      }
 
-         console.log(result);
-         
-    } 
+      const result = await createApplication(applicationData, token)
+      console.log("result", result)
 
-    return (
-         <Dialog>
+      if (!result.insertedId) {
+        toast.add({
+          title: "Error",
+          description: `Some thing went wront`,
+        })
+        return
+      }
+
+      if (result.insertedId) {
+        router.push("/browse-tuitions")
+        toast.add({
+          title: "Success",
+          description: `You applied successfully`,
+        })
+      }
+
+      console.log(result)
+    }
+  }
+  return (
+    <Dialog>
       <form>
-        <DialogTrigger render={ <Button type="button"disabled={user?.role !== "student" ? true : false}  className="bg-amber-500 w-[200px]" 
-                       
-                        >Apply</Button>
-} />
+        <DialogTrigger
+          render={
+            <Button
+              type="button"
+              disabled={user?.role !== "student" ? true : false}
+              className="w-[200px] bg-amber-500"
+            >
+              Apply
+            </Button>
+          }
+        />
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
@@ -124,30 +147,42 @@ const ApplyButton = ({tuition}: {tuition : Tuition}) => {
               done.
             </DialogDescription>
           </DialogHeader>
-            <form onSubmit={applyHandler}>
-          <FieldGroup>
-                <Field>
-              <Label htmlFor="phone-1">Phone Number</Label>
-              <Input id="phone-1" name="phone" placeholder="Enter your phone number" />
-            </Field>
-            <Field>
-              <Label htmlFor="schedule-1">Preferred Schedule</Label>
-              <Input id="schedule-1" name="schedule" placeholder="Enter your preferred schedule" />
-            </Field>
-            <Field>
-              <Label htmlFor="note-1">Learning Note</Label>
-              <Input id="note-1" name="note" placeholder="Enter your learning note" />
-            </Field>
-          </FieldGroup>
-          <DialogFooter>
-            <DialogClose render={<Button variant="outline">Cancel</Button>} />
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
-            </form>
+          <form onSubmit={applyHandler}>
+            <FieldGroup>
+              <Field>
+                <Label htmlFor="phone-1">Phone Number</Label>
+                <Input
+                  id="phone-1"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                />
+              </Field>
+              <Field>
+                <Label htmlFor="schedule-1">Preferred Schedule</Label>
+                <Input
+                  id="schedule-1"
+                  name="schedule"
+                  placeholder="Enter your preferred schedule"
+                />
+              </Field>
+              <Field>
+                <Label htmlFor="note-1">Learning Note</Label>
+                <Input
+                  id="note-1"
+                  name="note"
+                  placeholder="Enter your learning note"
+                />
+              </Field>
+            </FieldGroup>
+            <DialogFooter>
+              <DialogClose render={<Button variant="outline">Cancel</Button>} />
+              <Button type="submit">Save changes</Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </form>
     </Dialog>
-    );
-};
+  )
+}
 
-export default ApplyButton;
+export default ApplyButton

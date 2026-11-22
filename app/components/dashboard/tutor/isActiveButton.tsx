@@ -6,6 +6,7 @@ import { TuitionType } from './EditDialog';
 import { updateTuition } from '@/lib/actions/tuitions';
 import { toast } from '@/components/ui/toast';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
 const availabilityStatuses = [
     { label : "Active", value : true},
@@ -16,11 +17,15 @@ const availabilityStatuses = [
 const IsActiveButton = ({tuition}: {tuition : TuitionType}) => {
     const [ activeValue , setIsactive ] = useState(true)
    console.log("activeValue", activeValue);
-  
+
    const router = useRouter()
 
+   const { data : session , error } = authClient.useSession();
+
+   const token = session?.session.token
+
      const handleActive = async (value: string | null) => {
-         const updatedActive = await updateTuition(tuition._id, { isActive : Boolean(value) });
+         const updatedActive = await updateTuition(tuition._id, { isActive : Boolean(value) },token);
          console.log(updatedActive);
          
          if(updatedActive){

@@ -31,7 +31,7 @@ import { authClient } from "@/lib/auth-client"
 import { redirect } from "next/navigation"
 import { toast } from "@/components/ui/toast"
 
-type UserRole = "tutor" | "student";
+export type UserRole = "tutor" | "student";
 
 export type Role = {
   label : string,

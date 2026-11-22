@@ -6,6 +6,7 @@ import PricingSection from "./components/home/pricingSection"
 import FreeVsProSection from "./components/home/freeVsProSection"
 import HowWorkSection from "./components/home/howWorkSection"
 import LoveLessonSection from "./components/home/loveLessonSection"
+import DynamicFeatured from "./components/home/dynamicFeatured"
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
        <PricingSection/>
        <FreeVsProSection/>
        <HowWorkSection/>
+       <DynamicFeatured/>
        <LoveLessonSection/>
     </div>
   )

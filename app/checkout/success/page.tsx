@@ -35,13 +35,26 @@ export default async function Success({ searchParams }:{ searchParams : Promise<
      console.log({result})
 
     return (
-      <section id="success">
-        <p>
-          We appreciate your business! A confirmation email will be sent to{' '}
-          {/* {customerEmail}. */}
-           If you have any questions, please email{' '}
-          <a href="mailto:orders@example.com">orders@example.com</a>.
-        </p>
+      <section id="success" className="flex min-h-[60vh] items-center justify-center bg-muted px-6 py-16">
+        <div className="w-full max-w-md rounded-lg bg-white p-10 text-center shadow-sm">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-500">
+            <svg className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+
+          <h2 className="mt-6 text-3xl font-bold">Success</h2>
+
+          <p className="mt-3 text-muted-foreground">
+            We appreciate your business! A confirmation email will be sent to{' '}
+            {/* {customerEmail}. */}
+            If you have any questions, please email{' '}
+            <a href="mailto:orders@example.com" className="text-[#fb9506] underline">
+              orders@example.com
+            </a>
+            .
+          </p>
+        </div>
       </section>
     )
   }

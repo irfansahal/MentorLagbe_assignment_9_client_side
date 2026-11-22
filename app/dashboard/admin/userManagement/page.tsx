@@ -66,7 +66,9 @@ const UserManagement = async () => {
                                     <RoleSelect userId={user._id}/>
                                 </td>
 
-                                <td className="px-4 py-3">{user.subscription || "Free"}</td>
+                                <td className="px-4 py-3">{user.subscription 
+                                || "Free"
+                                }</td>
                                 <td className="px-4 py-3">
                                     {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
                                 </td>

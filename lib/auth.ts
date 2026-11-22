@@ -18,7 +18,9 @@ export const auth = betterAuth({
       additionalFields: {
          role: {
         type: ["tutor", "student", "admin"],
-        input: true, // don't allow user to set role
+        input: true,  
+        
+        // don't allow user to set role
       },   
       subscription : {
          type : "string",

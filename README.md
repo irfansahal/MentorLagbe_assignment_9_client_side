@@ -10,6 +10,10 @@ To help students find suitable tutors easily and help tutors manage their tuitio
 
 email : afridi@gamil.com , password : afridi123 .
 
+## Tutor credentials :
+
+email : asifmahmud@gamil.com , password : asifmahmud123
+
 ## Live Url : 
 
 [MentorLagbe](https://mentor-lagbe-client-side.vercel.app/)

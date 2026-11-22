@@ -71,7 +71,9 @@ const Tuitions = async () => {
                                                   : "bg-yellow-500/15 text-yellow-600"
                                         }`}
                                     >
-                                        {tuition.approvalStatus || "pending"}
+                                        {tuition.approvalStatus 
+                                        // || "pending"
+                                        }
                                     </span>
                                 </div>
                             </div>

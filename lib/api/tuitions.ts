@@ -22,6 +22,6 @@ export const getAllTuitions = async () => {
 }
 
 export const getSixTuitions = async () => {
-      const res = await fetch(`${BASE_URL}/six-tuitions`);
+      const res = await fetch(`${BASE_URL}/six-tuitions`,);
       return res.json()
 }

@@ -26,7 +26,7 @@ const Transactions = async () => {
             <h1 className="mb-4 text-xl font-semibold">Transactions</h1>
 
             <div className="overflow-x-auto rounded-lg border border-border">
-                <table className="w-full min-w-[900px] border-collapse text-sm">
+                <table className="w-full min-w-[900px] border-collapse text-sm pb-5">
                     <thead>
                         <tr className="bg-[#fbad06] text-left text-xs font-semibold uppercase tracking-wide text-black">
                             <th className="px-4 py-3">User Name</th>
@@ -48,7 +48,7 @@ const Transactions = async () => {
                                 <td className="px-4 py-3">{transaction.customer_email}</td>
                                 <td className="px-4 py-3">{transaction.userRole || "N/A"}</td>
                                 <td className="px-4 py-3">{transaction.payment_status}</td>
-                                <td className="px-4 py-3">৳{transaction.amount_total}</td>
+                                <td className="px-4 py-3">${transaction.amount_total}</td>
                                 <td className="px-4 py-3">{transaction.payment_intent || "N/A"}</td>
                                 <td className="px-4 py-3">
                                     {transaction.payment_date ? new Date(transaction.payment_date).toLocaleDateString() : "N/A"}

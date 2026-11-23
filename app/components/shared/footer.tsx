@@ -9,7 +9,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 const navLinks = [
     { label: "Home", href: "/" },
     { label: "Browse Tuitions", href: "/browse-tuitions" },
-    { label: "Pricing/Pro Plans", href: "/pricing" },
+    { label: "Pricing/Pro Plans", href: "/checkout" },
     { label: "About", href: "/about" },
 ];
 

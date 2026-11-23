@@ -25,8 +25,8 @@ const UserManagement = async () => {
         <div className="px-10">
             <h1 className="mb-4 text-xl font-semibold">User Management</h1>
 
-            <div className="overflow-x-auto rounded-lg border border-border">
-                <table className="w-full min-w-[900px] border-collapse text-sm">
+            <div className="overflow-x-auto rounded-lg border border-border mb-5">
+                <table className="w-full min-w-[900px] border-collapse text-sm ">
                     <thead>
                         <tr className="bg-[#fbad06] text-left text-xs font-semibold uppercase tracking-wide text-black">
                             <th className="px-4 py-3">Image</th>

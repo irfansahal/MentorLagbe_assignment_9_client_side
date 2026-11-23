@@ -76,7 +76,9 @@ export function LoginForm({
       }
       if(error){
         console.log('something went wrong');
-        
+        toast.add({
+        title: "Error",
+        description: `Error : ${error.message} `})
       }
 
      

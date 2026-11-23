@@ -110,8 +110,11 @@ export function RegistrationForm({
         redirect("/")
       }
       if(error){
-        console.log('something went wrong');
-        
+        console.log(`something went wrong ${error.message}`);
+         toast.add({
+        title: "Error",
+        description: `Error : ${error.message}`,
+       })
       }
 
      

@@ -49,7 +49,7 @@ const DashboardSidebar = () => {
     return null;
   }
 
-  const role = user.role;
+  const role = user?.role;
 
    const menuItems =
     menuItemsByRole[role as keyof typeof menuItemsByRole] ??

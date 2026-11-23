@@ -13,7 +13,7 @@ const MyTuition = async () => {
         headers : await headers()
      });
 
-     const userId = session?.user.id
+     const userId = session?.user?.id
 
      const result = await getTuitions(userId ?? null)
      const tuitions: TuitionType[] = Array.isArray(result) ? result : result?.data ?? []

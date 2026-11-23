@@ -23,7 +23,7 @@ const MyTuitionTable = ({ tuitions }: { tuitions: TuitionType[] }) => {
   // if (tuitions.length === 0) {
   //   return <p className="text-sm text-muted-foreground">No tuitions found.</p>
   // }
-      console.log("tuitions",tuitions);
+      console.log("tuitions yes",tuitions);
       
 
   const router = useRouter()
@@ -64,7 +64,7 @@ const MyTuitionTable = ({ tuitions }: { tuitions: TuitionType[] }) => {
           </tr>
         </thead>
         <tbody>
-          {tuitions.map((tuition, index) => (
+          {tuitions?.map((tuition, index) => (
             <tr
               key={tuition._id ?? index}
               className="border-b border-border last:border-b-0 even:bg-muted/50"

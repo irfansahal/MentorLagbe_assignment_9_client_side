@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from "next/image";
 import pricingImage from "../../assets/pricing.jpg";
+import Link from 'next/link';
 
 const PricingSection = () => {
     return (
@@ -20,12 +21,14 @@ const PricingSection = () => {
                     <h3 className="text-xl font-bold text-zinc-900 sm:text-2xl">
                         Pro Plan: <span className="font-normal text-zinc-600">Premium features available through a paid subscription</span>
                     </h3>
+                    <Link href={'/checkout'}>
                     <button
                         type="button"
                         className="w-fit rounded-md border-2 border-white bg-[#fb9d06] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-amber-500"
                     >
                         Subscribe with Stripe
                     </button>
+                    </Link>
                 </div>
 
                 {/* Right div: image */}
